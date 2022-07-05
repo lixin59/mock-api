@@ -15,8 +15,7 @@
   },
   "lint-staged": {
     "*.{js,jsx,ts,tsx,vue}": [
-      "npm run lint",
-      "git add src/"
+      "npm run lint"
     ]
   },
   "dependencies": {
