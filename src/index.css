@@ -41,3 +41,8 @@ body {
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
+
+a{
+  text-decoration: none; /* 去除默认的下划线 */
+  color: #606060;    /* 去除默认的颜色和点击后变化的颜色 */
+}

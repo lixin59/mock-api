@@ -1,7 +1,13 @@
 <template>
   <div class="layout-topbar">
     <TieredMenu id="user_menu" ref="menu" :model="items" :popup="true" />
-    <div class="layout-topbar-start"></div>
+    <div class="layout-topbar-start">
+      <div v-for="tab in tabs" :key="tab.title">
+        <div :class="`head-link ${tab.link === currentRouter ? 'head-link-current' : ''}`" @click="linkTo(tab.link)">
+          {{ tab.title }}
+        </div>
+      </div>
+    </div>
     <div v-if="token" class="layout-topbar-end">
       <div class="topbar-submenu">
         <Button type="button" class="p-button-secondary p-button-text px-3" @click="add">
@@ -32,11 +38,12 @@
 </template>
 
 <script setup lang="ts">
-  import { ref } from 'vue';
+  import { ref, reactive, watch } from 'vue';
   import { useRouter } from 'vue-router';
   import { storeToRefs } from 'pinia';
   import { useUserStore } from '/@/store/modules/user';
   import Button from 'primevue/button';
+  import { routerLabel, routerPath } from '/@/router/constant';
   // import Avatar from 'primevue/avatar';
   import TieredMenu from 'primevue/tieredmenu';
   import { useToast } from 'primevue/usetoast';
@@ -50,12 +57,13 @@
 
   const { userName, token } = storeToRefs(userStore);
 
-  const jumpToLogin = () => {
-    router.push({
-      name: 'login'
-    });
-  };
-
+  const tabs = reactive([
+    { title: routerLabel.home, link: routerPath.home },
+    { title: routerLabel.api, link: routerPath.api },
+    { title: routerLabel.logs, link: routerPath.logs },
+    { title: routerLabel.users, link: routerPath.users }
+  ]);
+  const currentRouter = ref(router.currentRoute.value.name);
   const menu = ref();
   const items = ref<MenuItem[]>([
     {
@@ -73,6 +81,19 @@
       }
     }
   ]);
+
+  const jumpToLogin = () => {
+    router.push({
+      name: 'login'
+    });
+  };
+
+  const linkTo = (path: string) => {
+    router.push({
+      name: path
+    });
+    currentRouter.value = path;
+  };
 
   const ConfirmLogout = () => {
     confirm.require({
@@ -94,6 +115,14 @@
   const showUserMenu = (event: any) => {
     menu.value.toggle(event);
   };
+
+  watch(
+    () => router.currentRoute.value.name,
+    (name) => {
+      currentRouter.value = name;
+    },
+    { immediate: true, deep: true }
+  );
 </script>
 
 <style scoped>
@@ -133,5 +162,23 @@
     /*width: 4rem;*/
     /*margin-right: 0.5rem;*/
     text-align: center;
+  }
+  .head-link {
+    width: 6rem;
+    color: #64748b;
+    line-height: 2rem;
+    height: 2rem;
+    font-size: 18px;
+    text-align: center;
+    cursor: pointer;
+    /*border-radius: 8px;*/
+    /*background: #c0c0c0;*/
+  }
+  .head-link-current {
+    color: #86b6b5;
+    border-bottom: 2px solid #86b6b5;
+  }
+  .head-link:hover {
+    background: #edeeee;
   }
 </style>

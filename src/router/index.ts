@@ -2,7 +2,7 @@ import { createRouter, createWebHashHistory, RouteRecordRaw } from 'vue-router';
 import nprogress from 'nprogress'; // @types/nprogress
 import 'nprogress/nprogress.css';
 import AppLayout from '/@/layout/AppLayout.vue';
-import { routerPath } from '/@/router/constant';
+import { routerPath, routerLabel } from '/@/router/constant';
 
 // 开发模式使用路由
 const routes: RouteRecordRaw[] = [
@@ -17,27 +17,27 @@ const routes: RouteRecordRaw[] = [
     children: [
       {
         path: routerPath.home, // 默认子路由
-        name: 'home',
+        name: routerPath.home,
         component: () => import('../views/home/index.vue'),
-        meta: { title: '首页' }
+        meta: { title: routerLabel.home }
       },
       {
         path: routerPath.api,
-        name: 'api_management',
+        name: routerPath.api,
         component: () => import('../views/api-management/index.vue'),
-        meta: { title: '接口管理' }
+        meta: { title: routerLabel.api }
       },
       {
         path: routerPath.users,
-        name: 'user_management',
+        name: routerPath.users,
         component: () => import('../views/user-management/index.vue'),
-        meta: { title: '用户管理' }
+        meta: { title: routerLabel.users }
       },
       {
         path: routerPath.logs,
-        name: 'logs',
+        name: routerPath.logs,
         component: () => import('../views/event-logs/index.vue'),
-        meta: { title: '查看日志' }
+        meta: { title: routerLabel.users }
       }
     ]
   },
