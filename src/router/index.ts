@@ -1,18 +1,45 @@
 import { createRouter, createWebHashHistory, RouteRecordRaw } from 'vue-router';
 import nprogress from 'nprogress'; // @types/nprogress
 import 'nprogress/nprogress.css';
-import Test from '/@/layout/test.vue';
+import AppLayout from '/@/layout/AppLayout.vue';
+import { routerPath } from '/@/router/constant';
 
 // 开发模式使用路由
 const routes: RouteRecordRaw[] = [
   {
     path: '/',
-    redirect: '/login',
-    component: Test,
+    name: 'root',
+    redirect: '/home',
+    component: AppLayout,
     meta: {
       requiresAuth: true
-    }
-    // children: []
+    },
+    children: [
+      {
+        path: routerPath.home, // 默认子路由
+        name: 'home',
+        component: () => import('../views/home/index.vue'),
+        meta: { title: '首页' }
+      },
+      {
+        path: routerPath.api,
+        name: 'api_management',
+        component: () => import('../views/api-management/index.vue'),
+        meta: { title: '接口管理' }
+      },
+      {
+        path: routerPath.users,
+        name: 'user_management',
+        component: () => import('../views/user-management/index.vue'),
+        meta: { title: '用户管理' }
+      },
+      {
+        path: routerPath.logs,
+        name: 'logs',
+        component: () => import('../views/event-logs/index.vue'),
+        meta: { title: '查看日志' }
+      }
+    ]
   },
   {
     path: '/login',

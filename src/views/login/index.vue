@@ -20,7 +20,7 @@
             <span class="p-inputgroup-addon loginInput">
               <i class="pi pi-lock"></i>
             </span>
-            <InputText v-model="user.pwd" class="loginInput" type="password" placeholder="密码" />
+            <InputText v-model="user.password" class="loginInput" type="password" placeholder="密码" />
           </div>
           <small v-show="passwordPrefix.show" id="password-help" class="p-error">{{ passwordPrefix.msg }}</small>
         </div>
@@ -42,15 +42,22 @@
 
 <script setup>
   import { reactive, ref } from 'vue';
+  import { useRouter, useRoute } from 'vue-router';
   import SvgIcon from '/@/components/SvgIcon/index.vue';
   import InputText from 'primevue/inputtext';
   import Button from 'primevue/button';
+  import { useToast } from 'primevue/usetoast';
+  import { loginApi } from '../../api/user';
+
+  const toast = useToast();
+  const router = useRouter();
+  const route = useRoute();
 
   const loginLoading = ref(false);
 
   const user = reactive({
     account: '',
-    pwd: ''
+    password: ''
   });
   const userNamePrefix = reactive({ show: false, msg: '请输入用户名！' });
   const passwordPrefix = reactive({ show: false, msg: '请输入密码！' });
@@ -63,13 +70,13 @@
       userNamePrefix.show = true;
       pass = false;
     }
-    if (user.pwd === '') {
+    if (user.password === '') {
       passwordPrefix.show = true;
       pass = false;
     }
     return pass;
   };
-  const login = () => {
+  const login = async () => {
     const pass = prefix();
     if (!pass) {
       return;
@@ -78,8 +85,25 @@
     // 验证通过，展示 loading
     loginLoading.value = true;
 
-    console.log('登录');
-    loginLoading.value = false;
+    const res = await loginApi(user)
+      .catch((e) => {
+        toast.add({ severity: 'error', summary: '登录失败', detail: e?.response?.data?.message || e, life: 3000 });
+      })
+      .finally(() => {
+        loginLoading.value = false;
+      });
+
+    if (!res) return;
+
+    toast.add({ severity: 'success', summary: '登录成功', detail: `欢迎回来 ${user.account}`, life: 3000 });
+    // 跳转回原来页面
+    let redirect = route.query.redirect;
+    console.log('redirect', redirect);
+    if (typeof redirect !== 'string') {
+      redirect = '/';
+    }
+    console.log('redirect', redirect);
+    router.replace(redirect);
   };
 </script>
 

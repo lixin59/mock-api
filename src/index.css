@@ -1,30 +1,36 @@
 .p-dialog-mask{
-  /*background-color: rgba(0, 0, 0, 0.25) !important;*/
-  /*backdrop-filter: blur(16px) !important;*/
+  z-index: 999 !important;
+  background-color: rgba(255, 255, 255, 0.1) !important;
+  backdrop-filter: blur(16px) !important;
 
 }
 .p-dialog {
   border-radius: 40px !important;
   box-shadow: 0 0px 24px rgb(0 0 0 / 30%) !important;
-  background-color: rgba(255, 255, 255, 0.25) !important;
+  background-color: rgba(255, 255, 255, 0.2) !important;
   backdrop-filter: blur(6px) !important;
 }
 .p-dialog-header {
   /*background-color: rgba(255, 255, 255, 0.25) !important;*/
   /*backdrop-filter: blur(1px) !important;*/
   border-radius: 40px 40px 0 0 !important;
-  background-color: rgba(255, 255, 255, 0) !important;
+  /*background-color: rgba(255, 255, 255, 0) !important;*/
 }
 .p-dialog-footer{
   /*background-color: rgba(255, 255, 255, 0.25) !important;*/
   /*backdrop-filter: blur(1px) !important;*/
   border-radius: 0 0 40px 40px !important;
-  background-color: rgba(255, 255, 255, 0) !important;
+  /*background-color: rgba(255, 255, 255, 0) !important;*/
 }
 .p-dialog-content{
-  background-color: rgba(255, 255, 255, 0) !important;
+  /*background-color: rgba(255, 255, 255, 0) !important;*/
   /*background-color: rgba(255, 255, 255, 0.25) !important;*/
   /*backdrop-filter: blur(1px) !important;*/
+}
+
+/*提示显示在最上层*/
+.p-tooltip{
+  z-index: 9 !important;
 }
 
 body {

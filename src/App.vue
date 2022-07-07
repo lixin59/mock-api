@@ -5,14 +5,20 @@
 <!--</script>-->
 
 <template>
+  <Toast />
+  <ConfirmDialog />
   <router-view />
 </template>
 
 <script setup lang="ts">
   import { onMounted } from 'vue';
+  import Toast from 'primevue/toast';
+  import ConfirmDialog from 'primevue/confirmdialog';
   import { usePrimeVue } from 'primevue/config';
   const changeToChinese = () => {
     const primevue = usePrimeVue();
+    primevue!.config!.locale!.accept = '是';
+    primevue!.config!.locale!.reject = '否';
     primevue!.config!.locale!.weak = '弱';
     primevue!.config!.locale!.medium = '中';
     primevue!.config!.locale!.strong = '强';
