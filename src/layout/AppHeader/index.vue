@@ -10,7 +10,7 @@
     </div>
     <div v-if="token" class="layout-topbar-end">
       <div class="topbar-submenu">
-        <Button type="button" class="p-button-secondary p-button-text px-3" @click="add">
+        <Button type="button" class="p-button-secondary p-button-text px-3">
           <i class="pi pi-bell" style="font-size: 24px"></i>
         </Button>
       </div>

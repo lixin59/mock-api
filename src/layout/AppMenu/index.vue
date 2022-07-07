@@ -8,7 +8,7 @@
         class="p-dock-action"
         @click="onDockItemClick($event, item)"
       >
-        <img :alt="item.label" :src="item.icon" style="width: 100%" />
+        <img :alt="() => String(item.label)" :src="item.icon" style="width: 100%" />
       </a>
     </template>
   </Dock>

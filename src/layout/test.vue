@@ -23,11 +23,10 @@
 </template>
 
 <script setup lang="ts">
-  import Toast from 'primevue/toast';
   import Button from 'primevue/button';
   import Terminal from 'primevue/terminal';
-  import Dialog from 'primevue/dialog';
   import { onMounted, onBeforeUnmount, ref } from 'vue';
+  import { useToast } from 'primevue/usetoast';
   import TerminalService from 'primevue/terminalservice';
 
   const displayBasic = ref(false);
@@ -35,7 +34,6 @@
     displayBasic.value = !displayBasic.value;
   };
 
-  import { useToast } from 'primevue/usetoast';
   const toast = useToast();
   const test = () => {
     toast.add({ severity: 'info', summary: 'Info Message', detail: '测试要', life: 3000 });
@@ -49,7 +47,7 @@
     TerminalService.off('command', commandHandler);
   });
 
-  const commandHandler = (text) => {
+  const commandHandler = (text: string) => {
     let response;
     const argsIndex = text.indexOf(' ');
     const command = argsIndex !== -1 ? text.substring(0, argsIndex) : text;
